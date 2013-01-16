@@ -63,7 +63,7 @@ class App
   end
 
   def cached?
-    $cache[@pattern]
+    $cache[@pattern.to_s]
   end
 
 end
