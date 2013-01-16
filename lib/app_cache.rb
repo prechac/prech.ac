@@ -1,5 +1,5 @@
 class AppCache
-  def initialize(cache)
+  def initialize(redis)
     @redis = redis
   end
 
