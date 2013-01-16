@@ -18,6 +18,13 @@ class App
     end
   end
 
+  def self.log(infos)
+    puts infos
+  end
+
+  def log(infos)
+    self.class.log(infos)
+  end
 
   def initialize(path)
     @path = path
@@ -38,19 +45,25 @@ class App
   end
 
   def redirect(to)
+    log "Redirecting to: #{to}"
     [ 302, {'Location' => to, 'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
     # [200, {'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
   end
 
   def get_url_for_pattern
+    log "Getting url for pattern:#{@pattern.inspect}"
     if cached?
+      log "Cache HIT [#{@pattern}]"
       $cache[@pattern.to_s]
     else
+      log "Cache MISS [#{@pattern}]"
       search_url = "http://prechacthis.org/index.php?persons=2&objects=&lengths=#{@pattern.period}&max=8&passesmin=1&passesmax=_&jugglerdoes=#{@pattern.to_param}&exclude=&clubdoes=&react=&results=42"
+      log "Searching with #{search_url}"
 
       doc = Nokogiri::HTML(open(search_url))
       swaps = doc.at_css('.swaps a')
       if swaps && swaps.count == 1
+        log "Found 1 result for #{@pattern}"
         $cache[@pattern.to_s] = fix_url(swaps['href'])
       else
         search_url

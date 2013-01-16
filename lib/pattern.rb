@@ -9,11 +9,12 @@ class Pattern
 
   attr_reader :pattern
   def initialize(pattern)
+    @source = pattern.dup
     if NAMES[pattern]
       @pattern = NAMES[pattern]
     else
       # TODO: Test the crap out of this, it looks like black magic
-      @pattern = self.class.parse_pattern(pattern)
+      @pattern = self.class.parse_pattern(pattern.dup)
     end
   end
 
@@ -37,6 +38,10 @@ class Pattern
 
   def to_a
     @pattern
+  end
+
+  def inspect
+    "#<Pattern #{to_s} source:#{@source}>"
   end
 end
 
