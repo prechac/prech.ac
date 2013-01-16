@@ -7,15 +7,20 @@ class Pattern
     'babydragontwins' => %w[4.5p 2.5p 4.5p 2.5p 1],
   }
 
-
   attr_reader :pattern
   def initialize(pattern)
     if NAMES[pattern]
       @pattern = NAMES[pattern]
     else
       # TODO: Test the crap out of this, it looks like black magic
-      @pattern = pattern.split(/\s+|(?<=p)|((?<=\d)(?=\d))/).select(&:present?)
+      @pattern = self.class.parse_pattern(pattern)
     end
+  end
+
+  def self.parse_pattern(pattern)
+    pattern = pattern.gsub(/[^\d\.p]/, ' ')
+    array = pattern.split(/\s+|(?<=p)|((?<=\d)(?=\d))/)
+    array.select(&:present?)
   end
 
   def period
@@ -28,6 +33,10 @@ class Pattern
 
   def to_param
     @pattern.join('%20')
+  end
+
+  def to_a
+    @pattern
   end
 end
 
