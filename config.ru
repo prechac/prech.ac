@@ -10,6 +10,8 @@ if ENV['REDISTOGO_URL']
   $redis = Redis.new(url: ENV['REDISTOGO_URL'])
 end
 
+# Logging in realtime
+$stdout.sync = true
 
 require 'app'
 
