@@ -1,9 +1,10 @@
+require 'active_support/all'
 
 class Pattern
   attr_reader :pattern
   def initialize(pattern)
     # TODO: Test the crap out of this, it looks like black magic
-    @pattern = pattern.split(/\s+|(?<=p)|((?<=\d)(?=\d))/)
+    @pattern = pattern.split(/\s+|(?<=p)|((?<=\d)(?=\d))/).select(&:present?)
   end
 
   def period
