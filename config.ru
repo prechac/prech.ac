@@ -7,7 +7,7 @@ $: << File.expand_path('..', __FILE__) + '/lib'
 
 
 if ENV['REDISTOGO_URL']
-  $redis = Redis.new(ENV['REDISTOGO_URL'])
+  $redis = Redis.new(url: ENV['REDISTOGO_URL'])
 end
 
 
