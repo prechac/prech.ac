@@ -5,6 +5,7 @@ gem 'nokogiri'
 # Oh heck, why not
 gem 'activesupport'
 gem 'redis'
+gem 'thin'
 
 group :test do
   gem 'rspec'
