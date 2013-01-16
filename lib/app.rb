@@ -1,11 +1,7 @@
 require 'pattern'
 require 'app_cache'
 
-$cache = if ENV['REDIS_URL']
-           AppCache.new
-         else
-           Hash.new
-         end
+$cache = ($redis ? AppCache.new($redis) : Hash.new)
 
 class App
 
