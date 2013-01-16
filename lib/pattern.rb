@@ -1,6 +1,8 @@
 require 'active_support/all'
 
 class Pattern
+  # Easter egg names.
+  # TODO: Add more. Pull-requests accepted.
   NAMES = {
     'holygrail' => %w[2.5p 3.5p 4.5p],
     'babydragon' => %w[4.5p 2.5p 1 1 1],
@@ -13,13 +15,13 @@ class Pattern
     if NAMES[pattern]
       @pattern = NAMES[pattern]
     else
-      # TODO: Test the crap out of this, it looks like black magic
       @pattern = self.class.parse_pattern(pattern.dup)
     end
   end
 
   def self.parse_pattern(pattern)
     pattern = pattern.gsub(/[^\d\.p]/, ' ')
+    # TODO: Test the crap out of this
     array = pattern.split(/\s+|(?<=p)|((?<=\d)(?=\d))/)
     array.select(&:present?)
   end
