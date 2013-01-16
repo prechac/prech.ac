@@ -4,6 +4,7 @@ class Pattern
   NAMES = {
     'holygrail' => %w[2.5p 3.5p 4.5p],
     'babydragon' => %w[4.5p 2.5p 1 1 1],
+    'babydragontwins' => %w[4.5p 2.5p 4.5p 2.5p 1],
   }
 
 

@@ -13,7 +13,7 @@ class App
     if path == '/favicon.ico'
       nothing
     else
-      new(path).call
+      new(Rack::Utils.unescape(path)).call
     end
   end
 
@@ -33,7 +33,7 @@ class App
   end
 
   def index
-    [ 200, {'Content-Type' => 'text/html'}, ["This will eventually be a url shortener for <a href='http://prechacthis.org'>prechacthis.org</a> once the dns gets set up."] ]
+    [ 200, {'Content-Type' => 'text/html'}, ["This is a url shortener for <a href='http://prechacthis.org'>prechacthis.org</a>.<br/>Examples: http://prech.ac/2.5p3.5p4.5p http://prech.ac/3p3p3p1 http://prech.ac/332p2.<br/><br/>Made by <a href='http://amielmartin.com'>Amiel Martin</a>"] ]
   end
 
   def redirect(to)
