@@ -9,8 +9,8 @@ class Pattern
 
   attr_reader :pattern
   def initialize(pattern)
-    if NAMES['pattern']
-      @pattern = NAMES['pattern']
+    if NAMES[pattern]
+      @pattern = NAMES[pattern]
     else
       # TODO: Test the crap out of this, it looks like black magic
       @pattern = pattern.split(/\s+|(?<=p)|((?<=\d)(?=\d))/).select(&:present?)
