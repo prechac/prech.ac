@@ -37,8 +37,8 @@ class App
   end
 
   def redirect(to)
-    # [ 301, {'Location' => to, 'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
-    [200, {'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
+    [ 301, {'Location' => to, 'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
+    # [200, {'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
   end
 
   def get_url_for_pattern
