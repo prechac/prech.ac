@@ -5,6 +5,10 @@ $cache = ($redis ? AppCache.new($redis) : Hash.new)
 
 class App
 
+  def self.root
+    APP_ROOT
+  end
+
   def self.nothing
     [200, {'Content-Type' => 'text/plain'}, [' ']]
   end
@@ -41,7 +45,8 @@ class App
   end
 
   def index
-    [ 200, {'Content-Type' => 'text/html'}, ["This is a url shortener for <a href='http://prechacthis.org'>prechacthis.org</a>.<br/>Examples: http://prech.ac/2.5p3.5p4.5p http://prech.ac/3p3p3p1 http://prech.ac/332p2.<br/><br/>Made by <a href='http://amielmartin.com'>Amiel Martin</a>"] ]
+    @@index ||= App.root.join('public/index.html').read
+    [ 200, {'Content-Type' => 'text/html'}, [@@index] ]
   end
 
   def redirect(to)
@@ -80,5 +85,4 @@ class App
   end
 
 end
-
 

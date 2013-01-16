@@ -13,6 +13,8 @@ end
 # Logging in realtime
 $stdout.sync = true
 
+APP_ROOT = Pathname.new(__FILE__).dirname
+
 require 'app'
 
 
