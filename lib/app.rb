@@ -1,12 +1,17 @@
 require 'pattern'
+require 'app_cache'
+
+$cache = if ENV['REDIS_URL']
+           AppCache.new
+         else
+           Hash.new
+         end
 
 class App
-  @@cache = {}
 
   def self.nothing
     [200, {'Content-Type' => 'text/plain'}, [' ']]
   end
-
 
   def self.call(env)
     path = env['PATH_INFO']
@@ -43,14 +48,14 @@ class App
 
   def get_url_for_pattern
     if cached?
-      @@cache[@pattern.to_s]
+      $cache[@pattern.to_s]
     else
       search_url = "http://prechacthis.org/index.php?persons=2&objects=&lengths=#{@pattern.period}&max=8&passesmin=1&passesmax=_&jugglerdoes=#{@pattern.to_param}&exclude=&clubdoes=&react=&results=42"
 
       doc = Nokogiri::HTML(open(search_url))
       swaps = doc.at_css('.swaps a')
       if swaps && swaps.count == 1
-        @@cache[@pattern.to_s] = fix_url(swaps['href'])
+        $cache[@pattern.to_s] = fix_url(swaps['href'])
       else
         search_url
       end
@@ -62,7 +67,7 @@ class App
   end
 
   def cached?
-    @@cache[@pattern]
+    $cache[@pattern]
   end
 
 end
