@@ -10,21 +10,30 @@ class Pattern
     'thedragon' => %w[4.5p 2.5p 2],
   }
 
-  attr_reader :pattern
+  attr_reader :pattern, :number_of_people
   def initialize(pattern)
     @source = pattern.dup
     if NAMES[pattern]
       @pattern = NAMES[pattern]
     else
-      @pattern = self.class.parse_pattern(pattern.dup)
+      @number_of_people, @pattern = self.class.parse_pattern(pattern.dup)
     end
   end
 
   def self.parse_pattern(pattern)
-    pattern = pattern.gsub(/[^\d\.p]/, ' ')
+    pattern = pattern.gsub(/[^\d\.p:]/, ' ')
+
+    n_people = pattern[/^\d+:/]
+    number_of_people = if n_people
+      pattern.gsub!(/^\d+:/, '')
+      n_people.to_i
+    else
+      2
+    end
+
     # TODO: Test the crap out of this
     array = pattern.split(/\s+|(?<=p)|((?<=\d)(?=\d))/)
-    array.select(&:present?)
+    [number_of_people, array.select(&:present?)]
   end
 
   def period

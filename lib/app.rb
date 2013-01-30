@@ -55,6 +55,10 @@ class App
     # [200, {'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
   end
 
+  def objects_string
+    (3..15).to_a.join('or')
+  end
+
   def get_url_for_pattern
     log "Getting url for pattern:#{@pattern.inspect}"
     if cached?
@@ -62,7 +66,7 @@ class App
       $cache[@pattern.to_s]
     else
       log "Cache MISS [#{@pattern}]"
-      search_url = "http://prechacthis.org/index.php?persons=2&objects=&lengths=#{@pattern.period}&max=8&passesmin=1&passesmax=_&jugglerdoes=#{@pattern.to_param}&exclude=&clubdoes=&react=&results=42"
+      search_url = "http://prechacthis.org/index.php?persons=#{@pattern.number_of_people}&objects=#{objects_string}&lengths=#{@pattern.period}&max=8&passesmin=1&passesmax=_&jugglerdoes=#{@pattern.to_param}&exclude=&clubdoes=&react=&results=42"
       log "Searching with #{search_url}"
 
       doc = Nokogiri::HTML(open(search_url))
