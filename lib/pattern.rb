@@ -53,7 +53,7 @@ class Pattern
   end
 
   def inspect
-    "#<Pattern #{to_s} source:#{@source}>"
+    "#<Pattern #{to_s} people:#{@number_of_people} source:#{@source}>"
   end
 end
 
