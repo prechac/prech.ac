@@ -55,8 +55,12 @@ class App
     # [200, {'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
   end
 
+  def number_of_people
+    @pattern.number_of_people
+  end
+
   def objects_string
-    (3..15).to_a.join('or')
+    (number_of_people..(number_of_people * 5)).to_a.join('or')
   end
 
   def get_url_for_pattern
