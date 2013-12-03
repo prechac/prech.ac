@@ -1,7 +1,7 @@
 require 'pattern'
 require 'app_cache'
 
-$cache = ($redis ? AppCache.new($redis) : Hash.new)
+$cache = ($redis ? AppCache.new($redis) : AppCache.new(Redis.new))
 
 class App
 
@@ -39,6 +39,8 @@ class App
     case @path
     when '/'
       index
+    when '/recents.json'
+      recents
     else
       redirect get_url_for_pattern
     end
@@ -47,6 +49,10 @@ class App
   def index
     @@index ||= App.root.join('public/index.html').read
     [200, {'Content-Type' => 'text/html'}, [@@index]]
+  end
+
+  def recents
+    [200, {'Content-Type' => 'application/json'}, [$cache.recents(5).to_json]]
   end
 
   def redirect(to)
@@ -67,6 +73,7 @@ class App
     log "Getting url for pattern:#{@pattern.inspect}"
     if cached?
       log "Cache HIT [#{@pattern}]"
+      $cache.add_recent @pattern.source
       $cache[@pattern.cache_key]
     else
       log "Cache MISS [#{@pattern}]"
@@ -77,6 +84,7 @@ class App
       swaps = doc.at_css('.swaps a')
       if swaps && swaps.count == 1
         log "Found 1 result for #{@pattern}"
+        $cache.add_recent @pattern.source
         $cache[@pattern.cache_key] = fix_url(swaps['href'])
       else
         search_url

@@ -16,7 +16,7 @@ class Pattern
     'awesometriangle' => [3, %w[3p 4p 3 3 4p 3]],
   }
 
-  attr_reader :pattern, :number_of_people
+  attr_reader :pattern, :number_of_people, :source
   def initialize(pattern)
     @source = pattern.dup
     if NAMES[pattern]
