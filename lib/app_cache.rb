@@ -18,7 +18,7 @@ class AppCache
   end
 
   def cache_key(key)
-    "prechac:2:#{sanitize_key(key)}"
+    "prechac:#{sanitize_key(key)}"
   end
 
   def sanitize_key(key)

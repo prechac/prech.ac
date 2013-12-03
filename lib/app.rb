@@ -46,12 +46,12 @@ class App
 
   def index
     @@index ||= App.root.join('public/index.html').read
-    [ 200, {'Content-Type' => 'text/html'}, [@@index] ]
+    [200, {'Content-Type' => 'text/html'}, [@@index]]
   end
 
   def redirect(to)
     log "Redirecting to: #{to}"
-    [ 302, {'Location' => to, 'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
+    [302, {'Location' => to, 'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
     # [200, {'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
   end
 
@@ -67,7 +67,7 @@ class App
     log "Getting url for pattern:#{@pattern.inspect}"
     if cached?
       log "Cache HIT [#{@pattern}]"
-      $cache[@pattern.to_s]
+      $cache[@pattern.cache_key]
     else
       log "Cache MISS [#{@pattern}]"
       search_url = "http://prechacthis.org/index.php?persons=#{@pattern.number_of_people}&objects=#{objects_string}&lengths=#{@pattern.period}&max=8&passesmin=1&passesmax=_&jugglerdoes=#{@pattern.to_param}&exclude=&clubdoes=&react=&results=42"
@@ -77,7 +77,7 @@ class App
       swaps = doc.at_css('.swaps a')
       if swaps && swaps.count == 1
         log "Found 1 result for #{@pattern}"
-        $cache[@pattern.to_s] = fix_url(swaps['href'])
+        $cache[@pattern.cache_key] = fix_url(swaps['href'])
       else
         search_url
       end
@@ -89,7 +89,7 @@ class App
   end
 
   def cached?
-    $cache[@pattern.to_s]
+    $cache[@pattern.cache_key]
   end
 
 end

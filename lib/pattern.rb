@@ -5,10 +5,12 @@ class Pattern
   # TODO: Add more. Pull-requests accepted.
   NAMES = {
     'holygrail' => [2, %w[2.5p 3.5p 4.5p]],
-    'babydragon' => [2, %w[4.5p 2.5p 1 1 1]],
     'babydragontwins' => [2, %w[4.5p 2.5p 4.5p 2.5p 1]],
     'thedragon' => [2, %w[4.5p 2.5p 2]],
     'yukishomework' => [3, %w[4p 2p 1 3p 3 1]],
+
+    'sleepingdragon' => [2, %[3.5p 2.5p 1 1 1]],
+    'babydragon' => [2, %w[4.5p 2.5p 1 1 1]],
 
     # TODO: Pick a good name for this pattern.
     'awesometriangle' => [3, %w[3p 4p 3 3 4p 3]],
@@ -46,6 +48,10 @@ class Pattern
 
   def to_s
     @pattern.join(' ')
+  end
+
+  def cache_key
+    [number_of_people, to_s].join(':')
   end
 
   def to_param

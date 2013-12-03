@@ -31,4 +31,16 @@ describe Pattern do
       '3:43.6p333' => [%w[4 3.6p 3 3 3], 3],
     )
   end
+
+  describe '#cache_key' do
+    it 'includes the default number of people' do
+      key = Pattern.new('2.5p3.5p4.5p').cache_key
+      expect(key).to eq '2:2.5p 3.5p 4.5p'
+    end
+
+    it 'includes the number of people' do
+      key = Pattern.new('3:43.6p333').cache_key
+      expect(key).to eq '3:4 3.6p 3 3 3'
+    end
+  end
 end
