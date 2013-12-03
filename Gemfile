@@ -7,7 +7,7 @@ gem 'nokogiri'
 # Oh heck, why not
 gem 'activesupport'
 gem 'redis'
-gem 'thin'
+gem 'puma'
 
 group :test do
   gem 'rspec'
