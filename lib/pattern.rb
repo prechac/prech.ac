@@ -12,6 +12,8 @@ class Pattern
     'sleepingdragon' => [2, %[3.5p 2.5p 1 1 1]],
     'babydragon' => [2, %w[4.5p 2.5p 1 1 1]],
 
+    'peppercorn' => [2, %w[2.5p 2 2 3 3]],
+
     # TODO: Pick a good name for this pattern.
     'awesometriangle' => [3, %w[3p 4p 3 3 4p 3]],
   }
