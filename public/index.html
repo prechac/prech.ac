@@ -5,7 +5,7 @@
 
     <style>
       section#main{ margin: 100px auto; width: 900px; }
-      </style>
+    </style>
   </head>
   <body>
 
@@ -32,13 +32,30 @@
         <li><a href="http://prech.ac/3:3p4p334p3">http://prech.ac/3:3p4p334p3</a></li>
       </ul>
 
+      <h2>Recently Used Patterns</h2>
+      <ul id="recents">
+        <li>Loading...</li>
+      </ul>
+
 
       <footer>
         Made by <a href='http://amielmartin.com'>Amiel Martin</a>.
         The code is <a href="http://github.com/prechac/prech.ac">open source</a>.
       </footer>
-
     </section>
+
+
+    <script src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
+    <script>
+      $.getJSON('/recents.json', function(results) {
+          var recents = $('#recents');
+          recents.empty();
+          $.each(results, function() {
+            recents.append('<li><a href="/'+this+'">'+this+'<'+'/a><'+'/li>');
+          });
+      });
+    </script>
+
   </body>
 </html>
 
