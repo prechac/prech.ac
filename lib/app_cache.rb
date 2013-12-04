@@ -12,8 +12,8 @@ class AppCache
   end
 
   def add_recent(path)
-    @redis.lrem recents_key, 0, path
-    @redis.lpush recents_key, path
+    @redis.lrem recents_key, 0, sanitize_key(path)
+    @redis.lpush recents_key, sanitize_key(path)
     # TODO: Cleanup so there's not too many keys?
   end
 
