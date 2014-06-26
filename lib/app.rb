@@ -1,5 +1,8 @@
 require 'pattern'
 require 'app_cache'
+require 'redis'
+
+require 'gabba'
 
 $cache = ($redis ? AppCache.new($redis) : AppCache.new(Redis.new))
 
@@ -18,7 +21,7 @@ class App
     if path == '/favicon.ico'
       nothing
     else
-      new(Rack::Utils.unescape(path)).call
+      new(Rack::Utils.unescape(path), env).call
     end
   end
 
@@ -30,8 +33,10 @@ class App
     self.class.log(infos)
   end
 
-  def initialize(path)
+  attr_reader :request, :path, :pattern
+  def initialize(path, env)
     @path = path
+    @request = Rack::Request.new env
     @pattern = Pattern.new(@path.sub(/^\//,''))
   end
 
@@ -42,6 +47,7 @@ class App
     when '/recents.json'
       recents
     else
+      track_request!
       redirect get_url_for_pattern
     end
   end
@@ -59,6 +65,15 @@ class App
     log "Redirecting to: #{to}"
     [302, {'Location' => to, 'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
     # [200, {'Content-Type' => 'text/plain'}, ["Redirecting to #{to}"]]
+  end
+
+
+  def track_request!
+    # No workie :( Need to figure out _ga
+    # gabba.identify_user request.cookies['__utma'], request.cookies['__utmz']
+    gabba.referer request.env['HTTP_REFERER']
+    gabba.ip request.env["REMOTE_ADDR"]
+    gabba.page_view("Pattern redirect: #{pattern.cache_key}", path)
   end
 
   def number_of_people
@@ -98,6 +113,10 @@ class App
 
   def cached?
     $cache[@pattern.cache_key]
+  end
+
+  def gabba
+    @_gabba ||= Gabba::Gabba.new("UA-1309955-17", "prech.ac", request.env['HTTP_USER_AGENT'])
   end
 
 end

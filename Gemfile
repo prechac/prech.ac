@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.1.0'
 
 gem 'rack'
 gem 'nokogiri'
@@ -8,6 +8,7 @@ gem 'nokogiri'
 gem 'activesupport'
 gem 'redis'
 gem 'puma'
+gem 'gabba'
 
 group :test do
   gem 'rspec'

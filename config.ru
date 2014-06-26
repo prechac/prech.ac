@@ -2,6 +2,7 @@
 require 'open-uri'
 require 'nokogiri'
 require 'redis'
+require 'pathname'
 
 $: << File.expand_path('..', __FILE__) + '/lib'
 
