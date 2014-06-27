@@ -12,19 +12,8 @@ class App
     APP_ROOT
   end
 
-  def self.plaintext(text)
-    [200, {'Content-Type' => 'text/plain'}, [text]]
-  end
-
   def self.call(env)
-    path = env['PATH_INFO']
-    if path == '/favicon.ico'
-      plaintext(' ')
-    elsif path == '/robots.txt'
-      plaintext("User-Agent: *\nDisallow: /*\nAllow: /$\n")
-    else
-      new(Rack::Utils.unescape(path), env).call
-    end
+    new(env).call
   end
 
   def self.log(infos)
@@ -36,8 +25,8 @@ class App
   end
 
   attr_reader :request, :path, :pattern
-  def initialize(path, env)
-    @path = path
+  def initialize(env)
+    @path = Rack::Utils.unescape(env['PATH_INFO'])
     @request = Rack::Request.new env
     @pattern = Pattern.new(@path.sub(/^\//,''))
   end
@@ -46,12 +35,20 @@ class App
     case @path
     when '/'
       index
+    when '/robots.txt'
+      plaintext("User-Agent: *\nDisallow: /*\nAllow: /$\n")
+    when '/favicon.ico'
+      plaintext(' ')
     when '/recents.json'
       recents
     else
       track_request!
       redirect get_url_for_pattern
     end
+  end
+
+  def plaintext(text)
+    [200, {'Content-Type' => 'text/plain'}, [text]]
   end
 
   def index
