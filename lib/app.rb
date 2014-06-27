@@ -12,14 +12,16 @@ class App
     APP_ROOT
   end
 
-  def self.nothing
-    [200, {'Content-Type' => 'text/plain'}, [' ']]
+  def self.plaintext(text)
+    [200, {'Content-Type' => 'text/plain'}, [text]]
   end
 
   def self.call(env)
     path = env['PATH_INFO']
     if path == '/favicon.ico'
-      nothing
+      plaintext(' ')
+    elsif path == '/robots.txt'
+      plaintext("User-Agent: *\nDisallow: /*\nAllow: /$\n")
     else
       new(Rack::Utils.unescape(path), env).call
     end
