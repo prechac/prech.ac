@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.0'
+ruby '2.1.7'
 
 gem 'rack'
 gem 'nokogiri'
