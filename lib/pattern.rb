@@ -9,7 +9,7 @@ class Pattern
     'thedragon' => [2, %w[4.5p 2.5p 2]],
     'yukishomework' => [3, %w[4p 2p 1 3p 3 1]],
 
-    'sleepingdragon' => [2, %[3.5p 2.5p 1 1 1]],
+    'sleepingdragon' => [2, %w[3.5p 3.5p 1 1 1]],
     'babydragon' => [2, %w[4.5p 2.5p 1 1 1]],
 
     'peppercorn' => [2, %w[2.5p 2 2 3 3]],
