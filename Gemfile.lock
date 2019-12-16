@@ -59,7 +59,7 @@ DEPENDENCIES
   ruby-fsevent
 
 RUBY VERSION
-   ruby 2.4.9p362
+   ruby 2.5.3p105
 
 BUNDLED WITH
    1.17.3
