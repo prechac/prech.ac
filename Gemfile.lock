@@ -20,14 +20,15 @@ GEM
     lumberjack (1.0.2)
     method_source (0.8.1)
     multi_json (1.5.0)
+    nio4r (2.5.2)
     nokogiri (1.5.6)
     pry (0.9.10)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.3.1)
-    puma (2.6.0)
-      rack (>= 1.1, < 2.0)
-    rack (1.5.2)
+    puma (4.3.1)
+      nio4r (~> 2.0)
+    rack (2.0.7)
     redis (3.0.2)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
@@ -54,3 +55,9 @@ DEPENDENCIES
   redis
   rspec
   ruby-fsevent
+
+RUBY VERSION
+   ruby 2.4.9p362
+
+BUNDLED WITH
+   1.17.3

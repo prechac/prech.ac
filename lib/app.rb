@@ -6,6 +6,9 @@ require 'gabba'
 
 $cache = ($redis ? AppCache.new($redis) : AppCache.new(Redis.new))
 
+MIN_OBJECTS = 1
+MAX_OBJECTS_PER_PERSON = 5
+
 class App
 
   def self.root
@@ -80,7 +83,7 @@ class App
   end
 
   def objects_string
-    (number_of_people..(number_of_people * 5)).to_a.join('or')
+    (MIN_OBJECTS..(number_of_people * MAX_OBJECTS_PER_PERSON)).to_a.join('or')
   end
 
   def get_url_for_pattern
