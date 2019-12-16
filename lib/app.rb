@@ -80,7 +80,7 @@ class App
   end
 
   def objects_string
-    (number_of_people..(number_of_people * 5)).to_a.join('or')
+    (1..(number_of_people * 5)).to_a.join('or')
   end
 
   def get_url_for_pattern
