@@ -7,7 +7,7 @@ require 'gabba'
 $cache = ($redis ? AppCache.new($redis) : AppCache.new(Redis.new))
 
 MIN_OBJECTS = 1
-MAX_OBJECTS_PER_PERSON = 5
+MAX_OBJECTS_PER_PERSON = 7
 
 class App
 
